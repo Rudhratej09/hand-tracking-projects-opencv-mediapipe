@@ -1,0 +1,32 @@
+import cv2
+import HandTrackingModule as htm
+
+cap = cv2.VideoCapture(0)
+detector = htm.handDetector(detection_con=0.75)
+gesture=[]
+while True:
+    fingers=[]
+    ret,frame=cap.read()
+    frame=detector.findHands(frame)
+    lmList=detector.findPOSI(frame,draw=False)
+    if lmList and len(lmList) >= 21:
+        
+        if lmList[4][1]>lmList[3][1]:
+            fingers.append(1)
+        else:
+            fingers.append(0)
+        tipIDS=[8,12,16,20]
+        for tipID in range(4):
+            if lmList[tipIDS[tipID]][2]<lmList[tipIDS[tipID]-2][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+        gesture=fingers.count(1)
+    cv2.putText(frame, str(gesture), (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 3)
+
+    cv2.imshow("Image", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+cap.release
+cv2.destroyAllWindows()
