@@ -34,13 +34,18 @@ This repository contains multiple computer vision mini-projects built using [Med
 ## 🛠️ Setup Instructions
 
 1. Clone the repo:
+   
   git clone https://github.com/yourusername/hand-tracking-projects-opencv-mediapipe.git
+  
   cd hand-tracking-projects-opencv-mediapipe
 
 2.install dependencies
+
   pip install -r requirements.txt
 
 3.run a project 
+
   cd finger_counter
+  
   python finger_counter.py
 
